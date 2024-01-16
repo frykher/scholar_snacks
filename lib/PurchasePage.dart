@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'OrderStatus.dart';
 
 class PurchasePage extends StatefulWidget {
   @override
@@ -23,7 +24,8 @@ class _PurchasePageState extends State<PurchasePage> {
                   color: Colors.green, borderRadius: BorderRadius.circular(20)),
               child: TextButton(
                 onPressed: () {
-                  null;
+                  Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => OrderStatus()),(route) => false);
                 },
                 child: Text(
                   'Purchase!',
