@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:scholar_snacks/Navigation.dart';
+import 'package:scholar_snacks/main.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -12,6 +15,29 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  Future _signUp() async {
+    final isValid = _formKey.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
+    final email = _emailController.text;
+    final password = _passwordController.text;
+    final name = _nameController.text;
+    try {
+      await supabase.auth
+          .signUp(email: email, password: password, data: {'name': name});
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => Navigation()),
+          (route) => false);
+    } on AuthException catch (error) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(error.message)));
+    } catch (error) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(error.toString())));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +58,6 @@ class _SignUpPageState extends State<SignUpPage> {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your email';
                   }
-                  // Add more email validation if needed
                   return null;
                 },
               ),
@@ -54,19 +79,12 @@ class _SignUpPageState extends State<SignUpPage> {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your password';
                   }
-                  // Add more password validation if needed
                   return null;
                 },
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    print('Email: ${_emailController.text}');
-                    print('Name: ${_nameController.text}');
-                    print('Password: ${_passwordController.text}');
-                  }
-                },
+                onPressed: _signUp,
                 child: const Text('Sign Up'),
               ),
             ],
