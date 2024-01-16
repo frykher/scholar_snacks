@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'OrderPage.dart';
 
 class OrderStatus extends StatefulWidget {
   @override
@@ -20,18 +21,19 @@ class _OrderStatusState extends State<OrderStatus> {
         Text('Your order of Chicken over rice costed \$8.00'),
         const SizedBox(height: 20),
         Container(
-              height: 50,
+              height: 100,
               width: 250,
               decoration: BoxDecoration(
                   color: Colors.green, borderRadius: BorderRadius.circular(20)),
               child: TextButton(
                 onPressed: () {
-                  Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => OrderStatus()),(route) => false);
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => OrderPage()));
                 },
-                child: Text(
-                  'I have received my order! (Click only when your order has arrived)',
-                  style: TextStyle(color: Colors.white, fontSize: 25),
+                child: Center(
+                  child: Text(
+                    'I have received my order! (Click only when your order has arrived)',
+                    style: TextStyle(color: Colors.white, fontSize: 14),
+                  ),
                 ),
               ),
             ),
