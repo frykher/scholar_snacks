@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:scholar_snacks/sign_up.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'Navigation.dart';
+import 'login_demo.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,134 +24,44 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginDemo(),
+      home: SplashPage(),
     );
   }
 }
 
-class LoginDemo extends StatefulWidget {
-  const LoginDemo({super.key});
+class SplashPage extends StatefulWidget {
+  const SplashPage({Key? key}) : super(key: key);
 
   @override
-  _LoginDemoState createState() => _LoginDemoState();
+  SplashPageState createState() => SplashPageState();
 }
 
-class _LoginDemoState extends State<LoginDemo> {
-  bool _isLoading = false;
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+class SplashPageState extends State<SplashPage> {
+  @override
+  void initState() {
+    super.initState();
+    _redirect();
+  }
 
-  Future _signIn() async {
-    setState(() {
-      _isLoading = true;
-    });
-    try {
-      await supabase.auth.signInWithPassword(
-        email: _emailController.text,
-        password: _passwordController.text,
-      );
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => Navigation()),
-          (route) => false);
-    } on AuthException catch (error) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(error.message)));
-      setState(() {
-        _isLoading = false;
-      });
-    } catch (error) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(error.toString())));
-      setState(() {
-        _isLoading = false;
-      });
+  Future<void> _redirect() async {
+    // await for for the widget to mount
+    await Future.delayed(Duration.zero);
+
+    final session = supabase.auth.currentSession;
+    if (session == null) {
+      Navigator.of(context)
+          .pushAndRemoveUntil(MaterialPageRoute(
+                              builder: (context) => const SignUpPage()), (route) => false);
+    } else {
+      Navigator.of(context)
+          .pushAndRemoveUntil(MaterialPageRoute(builder: (context) => Navigation()), (route) => false);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: const Center(child: Text("Login Page")),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 30.0,
-              ),
-              child: Center(
-                child: SizedBox(
-                  width: 200,
-                  height: 150,
-                  /*decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(50.0)),*/
-                  child: Image.asset('assets/default.png'),
-                ),
-              ),
-            ),
-            Padding(
-              //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: TextField(
-                controller: _emailController,
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Email',
-                    hintText: 'Enter valid email id as abc@gmail.com'),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 15.0, right: 15.0, top: 15, bottom: 0),
-              //padding: EdgeInsets.symmetric(horizontal: 15),
-              child: TextField(
-                obscureText: true,
-                controller: _passwordController,
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Password',
-                    hintText: 'Enter secure password'),
-              ),
-            ),
-            const SizedBox(height: 10),
-            Container(
-              height: 50,
-              width: 250,
-              decoration: BoxDecoration(
-                  color: const Color.fromRGBO(52, 25, 83, 1),
-                  borderRadius: BorderRadius.circular(20)),
-              child: TextButton(
-                onPressed: _signIn,
-                child: _isLoading
-                    ? const CircularProgressIndicator(
-                        color: Color.fromRGBO(52, 25, 83, 1))
-                    : const Text(
-                        'Login',
-                        style: TextStyle(color: Colors.white, fontSize: 25),
-                      ),
-              ),
-            ),
-            const SizedBox(
-              height: 40,
-            ),
-            TextButton(
-              onPressed: _isLoading
-                  ? null
-                  : () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const SignUpPage()));
-                    },
-              child: const Text('New User? Create Account'),
-            )
-          ],
-        ),
-      ),
-    );
+    return const Scaffold(body: Center(
+      child: CircularProgressIndicator(color: Colors.deepPurple)
+    ));
   }
 }
