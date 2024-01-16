@@ -1,14 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:scholar_snacks/sign_up.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'Navigation.dart';
 
-void main() {
-  runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Supabase.initialize(
+      url: 'https://iiqzifxwahrdpfnrzuxy.supabase.co',
+      anonKey:
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlpcXppZnh3YWhyZHBmbnJ6dXh5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDUzNTUwMzcsImV4cCI6MjAyMDkzMTAzN30.eIqbo8of1yKyRMbSoe5oAsfgoEIiRu9kIDQ0IOtCSOo');
+
+  runApp(const MyApp());
 }
 
+final supabase = Supabase.instance.client;
+
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: LoginDemo(),
     );
@@ -16,6 +29,8 @@ class MyApp extends StatelessWidget {
 }
 
 class LoginDemo extends StatefulWidget {
+  const LoginDemo({super.key});
+
   @override
   _LoginDemoState createState() => _LoginDemoState();
 }
@@ -26,25 +41,27 @@ class _LoginDemoState extends State<LoginDemo> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Center(child: Text("Login Page")),
+        title: const Center(child: Text("Login Page")),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 30.0,),
+              padding: const EdgeInsets.symmetric(
+                vertical: 30.0,
+              ),
               child: Center(
-                child: Container(
-                    width: 200,
-                    height: 150,
-                    /*decoration: BoxDecoration(
+                child: SizedBox(
+                  width: 200,
+                  height: 150,
+                  /*decoration: BoxDecoration(
                         color: Colors.red,
                         borderRadius: BorderRadius.circular(50.0)),*/
-                    child: Image.asset('assets/default.png'),
-                  ),
+                  child: Image.asset('assets/default.png'),
+                ),
               ),
             ),
-            Padding(
+            const Padding(
               //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
@@ -54,12 +71,11 @@ class _LoginDemoState extends State<LoginDemo> {
                     hintText: 'Enter valid email id as abc@gmail.com'),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(
+            const Padding(
+              padding: EdgeInsets.only(
                   left: 15.0, right: 15.0, top: 15, bottom: 0),
               //padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
-
                 obscureText: true,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -67,27 +83,33 @@ class _LoginDemoState extends State<LoginDemo> {
                     hintText: 'Enter secure password'),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Container(
               height: 50,
               width: 250,
               decoration: BoxDecoration(
-                  color: Color.fromRGBO(52, 25, 83, 1), borderRadius: BorderRadius.circular(20)),
+                  color: const Color.fromRGBO(52, 25, 83, 1),
+                  borderRadius: BorderRadius.circular(20)),
               child: TextButton(
                 onPressed: () {
                   Navigator.pushReplacement(
                       context, MaterialPageRoute(builder: (_) => Navigation()));
                 },
-                child: Text(
+                child: const Text(
                   'Login',
                   style: TextStyle(color: Colors.white, fontSize: 25),
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 40,
             ),
-            Text('New User? Create Account')
+            TextButton(
+                child: const Text('New User? Create Account'),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const SignUpPage()));
+                })
           ],
         ),
       ),
