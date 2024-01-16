@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'OrderPage.dart';
+import 'Navigation.dart';
 
 void main() {
   runApp(MyApp());
@@ -76,7 +76,7 @@ class _LoginDemoState extends State<LoginDemo> {
               child: TextButton(
                 onPressed: () {
                   Navigator.pushReplacement(
-                      context, MaterialPageRoute(builder: (_) => OrderPage()));
+                      context, MaterialPageRoute(builder: (_) => Navigation()));
                 },
                 child: Text(
                   'Login',

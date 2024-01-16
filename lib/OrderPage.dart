@@ -23,30 +23,6 @@ class _OrderPageState extends State<OrderPage> {
           // Edit this part
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            backgroundColor: Color.fromRGBO(52, 25, 83, 1),
-            selectedItemColor: Colors.white,
-            unselectedItemColor: Colors.white.withOpacity(.60),
-            selectedFontSize: 14,
-            unselectedFontSize: 14,
-            currentIndex: currentIndex,
-            onTap: (index) => setState(() => currentIndex = index),
-          items: [
-            BottomNavigationBarItem(
-              label: 'Order',
-              icon: Icon(Icons.favorite),
-            ),
-            BottomNavigationBarItem(
-              label: 'Delivery',
-              icon: Icon(Icons.music_note),
-            ),
-            BottomNavigationBarItem(
-              label: 'Account',
-              icon: Icon(Icons.location_on),
-            ),
-          ],
-      )
     );
   }
 }
