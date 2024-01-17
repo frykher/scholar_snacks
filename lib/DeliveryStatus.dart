@@ -28,6 +28,7 @@ class _DeliveryStatusState extends State<DeliveryStatus> {
 
   @override
   void initState() {
+    test();
     supabase
         .channel('order')
         .onPostgresChanges(
