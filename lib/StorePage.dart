@@ -20,7 +20,7 @@ class _StorePageState extends State<StorePage> {
   void initState() {
     _future = Supabase.instance.client
         .from('store')
-        .select()
+        .select('*, item(*)')
         .eq('id', widget.id)
         .single();
     super.initState();
@@ -36,57 +36,39 @@ class _StorePageState extends State<StorePage> {
                 child: CircularProgressIndicator(
                     color: Color.fromRGBO(52, 25, 83, 1)));
           }
+          print(snapshot.data);
+          final store = Store.fromMap(snapshot.data);
+
           return Scaffold(
             appBar: AppBar(
-              title: Text("Jerome\'s Halal Food Items"),
+              title: Text(store.name),
             ),
             body: Column(
               children: [
-                const SizedBox(height: 20),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => PurchasePage()));
-                  },
-                  child: Card(
-                    child: ListTile(
-                      leading: CircleAvatar(
-                          backgroundImage:
-                              ExactAssetImage('assets/chicken over rice.png')),
-                      tileColor: Colors.grey.withOpacity(0.3),
-                      title: Text('Chicken Over Rice \n \$8.00'),
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => PurchasePage()));
-                  },
-                  child: Card(
-                    child: ListTile(
-                      leading: CircleAvatar(
-                          backgroundImage:
-                              ExactAssetImage('assets/lamb over rice.png')),
-                      tileColor: Colors.grey.withOpacity(0.3),
-                      title: Text('Lamb Over Rice \n \$8.00'),
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => PurchasePage()));
-                  },
-                  child: Card(
-                    child: ListTile(
-                      leading: CircleAvatar(
-                          backgroundImage:
-                              ExactAssetImage('assets/mixed over rice.png')),
-                      tileColor: Colors.grey.withOpacity(0.3),
-                      title: Text('Mixed Over Rice \n \$8.00'),
-                    ),
-                  ),
+                Expanded(
+                  child: ListView.builder(
+                    padding: const EdgeInsets.only(top: 20),
+                      itemCount: store.items!.length,
+                      itemBuilder: (context, index) {
+                        final item = store.items![index];
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => PurchasePage(item: item, storeId: item.storeId)));
+                          },
+                          child: Card(
+                            child: ListTile(
+                              leading: CircleAvatar(
+                                  backgroundImage:
+                                      NetworkImage(item.imageUrl!)),
+                              tileColor: Colors.grey.withOpacity(0.3),
+                              title: Text(item.name),
+                            ),
+                          ),
+                        );
+                      }),
                 ),
               ],
             ),
