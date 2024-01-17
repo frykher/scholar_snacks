@@ -24,7 +24,7 @@ class _DeliveryStatusState extends State<DeliveryStatus> {
   void initState() {
     supabase.from('order').update({
       'carrier_id': supabase.auth.currentUser!.id,
-    });
+    }).eq('id', widget.order.id);
     supabase
         .channel('order')
         .onPostgresChanges(
