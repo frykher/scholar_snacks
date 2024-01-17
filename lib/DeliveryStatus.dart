@@ -20,11 +20,14 @@ class _DeliveryStatusState extends State<DeliveryStatus> {
         context, MaterialPageRoute(builder: (_) => Navigation()));
   }
 
-  @override
-  void initState() {
-    supabase.from('order').update({
+  Future<void> test() async {
+    await supabase.from('order').update({
       'carrier_id': supabase.auth.currentUser!.id,
     }).eq('id', widget.order.id);
+  }
+
+  @override
+  void initState() {
     supabase
         .channel('order')
         .onPostgresChanges(
