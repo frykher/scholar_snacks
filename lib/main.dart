@@ -51,7 +51,7 @@ class SplashPageState extends State<SplashPage> {
     if (session == null) {
       Navigator.of(context)
           .pushAndRemoveUntil(MaterialPageRoute(
-                              builder: (context) => const SignUpPage()), (route) => false);
+                              builder: (context) => const LoginDemo()), (route) => false);
     } else {
       Navigator.of(context)
           .pushAndRemoveUntil(MaterialPageRoute(builder: (context) => Navigation()), (route) => false);

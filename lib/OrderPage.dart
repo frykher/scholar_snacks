@@ -17,7 +17,7 @@ class _OrderPageState extends State<OrderPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text('Order Page')),
+        title: Center(child: const Text('Order Page')),
       ),
       body: FutureBuilder(
           future: _future,
@@ -47,7 +47,7 @@ class _OrderPageState extends State<OrderPage> {
                           controller.openView();
                         },
                         leading: const Icon(Icons.search),
-                        trailing: <Widget>[],
+                        trailing: const <Widget>[],
                       );
                     },
                     suggestionsBuilder:
@@ -80,13 +80,11 @@ class _OrderPageState extends State<OrderPage> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (_) => StorePage()));
+                                        builder: (_) => StorePage(id: store.id)));
                               },
                               child: Card(
                                 child: ListTile(
-                                  leading: CircleAvatar(
-                                      backgroundImage: ExactAssetImage(
-                                          'assets/jeromes.png')),
+                                  leading: CircleAvatar(backgroundImage: Image.network(store.imageUrl).image),
                                   tileColor: Colors.grey.withOpacity(0.3),
                                   title: Text(store.name),
                                 ),
