@@ -21,8 +21,8 @@ class _DeliveryStatusState extends State<DeliveryStatus> {
   }
 
   @override
-  void initState() async {
-    await supabase.from('order').update({
+  void initState() {
+    supabase.from('order').update({
       'carrier_id': supabase.auth.currentUser!.id,
     });
     supabase
