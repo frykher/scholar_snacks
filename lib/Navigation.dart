@@ -48,7 +48,7 @@ class _NavigationState extends State<Navigation> {
               iconSize: 24,
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               duration: Duration(milliseconds: 400),
-              tabBackgroundColor: Colors.grey[100]!,
+              tabBackgroundColor: Color.fromRGBO(52, 25, 83, 0.8)!,
               color: Colors.black,
               tabs: [
                 GButton(
