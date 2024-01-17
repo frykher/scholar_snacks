@@ -9,7 +9,7 @@ class DeliveryPage extends StatefulWidget {
 }
 
 class _DeliveryPageState extends State<DeliveryPage> {
-  final _future = Supabase.instance.client.from('order').select();
+  final _future = Supabase.instance.client.from('order').select().isFilter('carrier_id', null);
 
   @override
   Widget build(BuildContext context) {
