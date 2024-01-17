@@ -53,7 +53,7 @@ class _OrderPageState extends State<OrderPage> {
                     suggestionsBuilder:
                         (BuildContext context, SearchController controller) {
                       return List<ListTile>.generate(1, (int index) {
-                        final String item = 'item $index';
+                        final String item = 'Jerome\'s Halal';
                         return ListTile(
                           title: Text(item),
                           onTap: () {

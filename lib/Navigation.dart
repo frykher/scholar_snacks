@@ -52,15 +52,15 @@ class _NavigationState extends State<Navigation> {
               color: Colors.black,
               tabs: [
                 GButton(
-                  icon: LineIcons.home,
+                  icon: LineIcons.store,
                   text: 'Order',
                 ),
                 GButton(
-                  icon: LineIcons.heart,
+                  icon: LineIcons.running,
                   text: 'Delivery',
                 ),
                 GButton(
-                  icon: LineIcons.search,
+                  icon: LineIcons.user,
                   text: 'Account',
                 ),
               ],

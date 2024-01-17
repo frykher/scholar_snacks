@@ -1,38 +1,41 @@
 import 'package:flutter/material.dart';
+import 'DeliveryStatus.dart';
 
-class AccountPage extends StatefulWidget {
+class DeliveryConfirmation extends StatefulWidget {
   @override
-  _AccountPageState createState() => _AccountPageState();
+  _DeliveryConfirmationState createState() => _DeliveryConfirmationState();
 }
 
-class _AccountPageState extends State<AccountPage> {
+class _DeliveryConfirmationState extends State<DeliveryConfirmation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text('Account Page')),
+        title: Text("Delivery Details"),
       ),
       body: Center(child: Column(children: [
         const SizedBox(height: 30),
-        Text('Click this button to logout', style: TextStyle(fontSize: 30)),
+        Text('Are you sure you would like to take this order?'),
         const SizedBox(height: 30),
         Container(
               height: 50,
               width: 250,
               decoration: BoxDecoration(
-                  color: Colors.red, borderRadius: BorderRadius.circular(20)),
+                  color: Colors.green, borderRadius: BorderRadius.circular(20)),
               child: TextButton(
                 onPressed: () {
-                  null;
+                  Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => DeliveryStatus()),(route) => false);
                 },
                 child: Text(
-                  'Logout',
+                  'Accept!',
                   style: TextStyle(color: Colors.white, fontSize: 25),
                 ),
               ),
             ),
       ]
       )
-      ));
+      )
+    );
   }
 }
