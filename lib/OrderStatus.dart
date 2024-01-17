@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'OrderPage.dart';
+import 'Navigation.dart';
 
 class OrderStatus extends StatefulWidget {
   @override
@@ -27,7 +27,7 @@ class _OrderStatusState extends State<OrderStatus> {
                   color: Colors.green, borderRadius: BorderRadius.circular(20)),
               child: TextButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => OrderPage()));
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => Navigation()));
                 },
                 child: Center(
                   child: Text(
